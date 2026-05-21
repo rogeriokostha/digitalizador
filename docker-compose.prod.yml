@@ -50,6 +50,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
       # Altere "api.digitalizadordeideias.com.br" para o domínio final da sua API
       - "traefik.http.routers.digitalizador-backend.rule=Host(`api.digitalizadordeideias.com.br`)"
       - "traefik.http.routers.digitalizador-backend.entrypoints=websecure"
@@ -76,6 +77,7 @@ services:
       - traefik-public
     labels:
       - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
       # Altere para os domínios finais do seu Frontend
       - "traefik.http.routers.digitalizador-frontend.rule=Host(`digitalizadordeideias.com.br`) || Host(`www.digitalizadordeideias.com.br`)"
       - "traefik.http.routers.digitalizador-frontend.entrypoints=websecure"
