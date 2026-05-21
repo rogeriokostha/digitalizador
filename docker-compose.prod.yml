@@ -54,7 +54,7 @@ services:
       - "traefik.http.routers.digitalizador-backend.rule=Host(`api.digitalizadordeideias.com.br`)"
       - "traefik.http.routers.digitalizador-backend.entrypoints=websecure"
       - "traefik.http.routers.digitalizador-backend.tls=true"
-      - "traefik.http.routers.digitalizador-backend.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.digitalizador-backend.tls.certresolver=myresolver"
       - "traefik.http.services.digitalizador-backend.loadbalancer.server.port=8000"
 
   frontend:
@@ -80,7 +80,7 @@ services:
       - "traefik.http.routers.digitalizador-frontend.rule=Host(`digitalizadordeideias.com.br`) || Host(`www.digitalizadordeideias.com.br`)"
       - "traefik.http.routers.digitalizador-frontend.entrypoints=websecure"
       - "traefik.http.routers.digitalizador-frontend.tls=true"
-      - "traefik.http.routers.digitalizador-frontend.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.digitalizador-frontend.tls.certresolver=myresolver"
       - "traefik.http.services.digitalizador-frontend.loadbalancer.server.port=3000"
 
 networks:
