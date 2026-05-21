@@ -27,8 +27,8 @@ services:
       dockerfile: Dockerfile
     container_name: digitalizador_prod_backend
     restart: always
-    # Comando de produção otimizado com Gunicorn em vez de runserver
-    command: gunicorn nucleo.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    # Comando de produção otimizado com Gunicorn em vez de runserver, garantindo collectstatic no boot
+    command: sh -c "python manage.py collectstatic --noinput && gunicorn nucleo.wsgi:application --bind 0.0.0.0:8000 --workers 3"
     environment:
       - DEBUG=False
       - DJANGO_SETTINGS_MODULE=nucleo.settings.prod
