@@ -24,7 +24,8 @@ urlpatterns = [
     path("api/auth/verify/", CustomTokenVerifyView.as_view(), name="token_verify"),
     path("api/auth/me/", MeView.as_view(), name="auth-me"),
     path("api/auth/logout/", LogoutView.as_view(), name="auth-logout"),
-    path("api/", include("apps.users.api_urls")),
+    path("api/users/", include("apps.users.api_urls")),
+    path("api/core/", include("apps.core.urls")),
 
 ]
 

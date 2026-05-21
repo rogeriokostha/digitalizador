@@ -1,6 +1,6 @@
 /* Inputs mais visíveis */
 
-input,
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="file"]),
 select,
 textarea {
     border: 2px solid #cbd5e1 !important;
@@ -11,7 +11,7 @@ textarea {
 
 /* Foco roxo estilo Django */
 
-input:focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="file"]):focus,
 select:focus,
 textarea:focus {
     border-color: #7c3aed !important;

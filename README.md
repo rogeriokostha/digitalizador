@@ -1,24 +1,43 @@
-# 🚀 Dev-Imortal — Boilerplate Corporativo Fullstack
+# 🚀 Digitalizador — Landing Page de Vendas & Portfólio de Elite
 
-Bem-vindo ao **Boilerplate Dev-Imortal**! Este não é apenas um template, mas um ecossistema pronto para produção pensado para iniciar novos produtos escaláveis instantaneamente com forte ênfase em **arquitetura, segurança e padronização**.
+> "Sua ideia transformada em plataforma de elite."
 
-A estrutura adota o padrão **Monorepo** com comunicação por REST, unindo Django na infraestrutura de dados (Backend) acoplado intimamente a um frontend em React moderno (Next.js).
+Bem-vindo ao repositório oficial do **Digitalizador**! Este ecossistema digital representa a Landing Page comercial e o portfólio profissional de **Rogerio Kostha** (Arquiteto de Soluções). 
+
+Projetada com foco em **alta conversão, estética premium e experiência do usuário (UX) excepcional**, esta aplicação demonstra como materializar visões complexas em ativos de software escaláveis e de alto impacto comercial.
 
 ---
 
-## 🛠 Tecnologias Embarcadas
+## 🌟 Diferenciais de Experiência do Usuário (UX) & Design
 
-**Backend:**
-* [Django 5+](https://www.djangoproject.com/) — Robusto núcleo do servidor.
-* [Django REST Framework](https://www.django-rest-framework.org/) — Interface padrão para a rede HTTP.
-* [JWT e DRF Spectacular] — Autenticação blindada e design em Swagger automático.
-* **Infra**: PostgreSQL (base global) e Redis (cache primário rápido e background tasks).
-* **Qualidade**: Linting ativo via pacote moderno `Ruff` acelerado em Rust.
+A interface foi projetada para encantar o usuário no primeiro olhar e guiá-lo suavemente até a conversão:
+* **Rich Aesthetics (Visual Premium)**: Design escuro sofisticado com paleta de cores HSL cuidadosamente selecionada e gradientes suaves.
+* **Sistema Orbital 3D**: Efeitos visuais dinâmicos em camadas no plano de fundo, incluindo orbes luminosos animados, scanlines cibernéticos e malhas de ruído estético.
+* **Micro-animações de Elite**: Transições e efeitos de hover customizados em curvas Bézier para todos os elementos interativos e botões com contorno duplo (*Double-Bezel*).
+* **Foco em Conversão**:
+  - Fluxo de contato direto via abas interativas (*Contact Tabs*).
+  - Formulário inteligente de captura e botão flutuante flutuante de WhatsApp estrategicamente posicionado.
+  - Indicadores de confiança minimalistas baseados em dados reais.
 
-**Frontend:**
-* [Next.js 15+](https://nextjs.org/) — Roteamento pelo diretório `/app`.
-* Integração JWT assíncrona baseada por Actions ou Middleware para proteção de sessão.
-* Base UI já conectada e performática. 
+---
+
+## 🛠 Stack Tecnológica
+
+O projeto adota a arquitetura de **Monorepo** com comunicação assíncrona baseada em APIs RESTful seguras:
+
+* **Frontend (Next.js 15+)**:
+  - Roteamento nativo baseado no diretório `/app` (App Router).
+  - Componentização modular voltada a alto desempenho e SEO.
+  - Carregamento instantâneo com otimização avançada de imagens e fontes do Google.
+* **Backend (Django 5+ & DRF)**:
+  - Estrutura corporativa e API escalável com Django REST Framework.
+  - Autenticação blindada por tokens JWT para possíveis painéis administrativos futuros.
+  - Qualidade de código mantida via linting acelerado por Rust com `Ruff`.
+* **Banco de Dados & Cache**:
+  - **PostgreSQL**: Banco relacional robusto para armazenamento seguro de mensagens e leads.
+  - **Redis**: Sistema em memória para cache ultra-rápido e enfileiramento de tarefas em segundo plano.
+* **Infraestrutura Local**:
+  - Orquestração completa via **Docker Compose** e utilitários em **PowerShell** (`cli.ps1`).
 
 ---
 
@@ -26,64 +45,84 @@ A estrutura adota o padrão **Monorepo** com comunicação por REST, unindo Djan
 
 ```text
 /
-├── backend/          -> Diretório isolado do núcleo Python e API do Django.
-├── frontend/         -> Ambiente puro Node.js em SPA / SSR e consumo de React.
-├── cli.ps1           -> Poderoso Wrapper utilitário que substitui dezenas de linhas de comando para instanciar a aplicação.
-└── docker-compose.yml-> Gerenciador de provisionamento local e produtivo de serviços de Infra via Containers.
+├── backend/          -> APIs Django, modelos de banco de dados e lógica de leads.
+├── frontend/         -> Next.js 15, interface rica, formulários e componentes interativos.
+├── cli.ps1           -> Poderoso Wrapper CLI em PowerShell para automatizar comandos locais.
+└── docker-compose.yml-> Provisionamento local de containers (Postgres, Redis, Backend).
 ```
 
 ---
 
-## ⚙️ Começando Imediatamente (Modo Rápido usando Script `cli.ps1`)
+## ⚙️ Inicialização Local (Ambiente de Desenvolvimento)
 
-Este projeto abstrai todas as complicações iniciais com contêineres e instalações utilizando um _wrapper script_ incluído na pasta base **PowerShell** `cli.ps1`. 
+Para executar o projeto em sua máquina local utilizando o prático utilitário `cli.ps1` PowerShell, garanta que possui o **Docker Desktop** e o **Node.js** instalados.
 
-### Pré-requisitos Requeridos:
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) rodando ativamente.
-- Node.js (v18.x ou superior) + pnpm / npm local para dev no Front.
-
-### 1️⃣ Inicialização Total e Mágica (`setup`)
-O comando setup copiará os `.env` exigidos pelo projeto local, fará o build do banco com as tabelas pré-prontas do painel admin unificado, levantará Docker, aplicará migrações de SQL e instalará todas as bibliotecas necessárias para o Node no frontend:
-
+### 1️⃣ Setup Completo e Automático
+O comando setup cria seus arquivos `.env`, levanta os contêineres Docker de banco de dados, aplica migrações e instala todas as dependências do Node.js:
 ```powershell
 .\cli.ps1 setup
 ```
 
-### 2️⃣ Gerando seu Superusuário (Painel Unfold Django)
-Para testar seu painel administrativo backend instantaneamente, rode:
-
+### 2️⃣ Criar seu Superusuário (Painel Administrativo)
 ```powershell
 .\cli.ps1 superuser
 ```
 
-### 3️⃣ Subindo a Experiência Frontend Completa em Dev (Local Server)
-Geralmente o desenvolvimento em React exige resposta nativa ao compilador para "Hot Reload" ágil, portanto mantemos seu acesso local (pelo Node) em vez do Docker, apenas digite:
-
+### 3️⃣ Iniciar o Frontend em Dev
+Com o Docker de banco rodando, inicie o Next.js localmente para maior velocidade de hot-reload:
 ```powershell
 cd frontend
 npm run dev
 ```
 
-Pronto 🎉! Acesse a interface unificada pelas seguintes portas:
-
-* **Aplicação Pública Frontend**: [http://localhost:3000](http://localhost:3000)
-* **Status da API e Rotas de Back**: [http://localhost:8000/api](http://localhost:8000/api) 
-* **Documentação Viva em Swagger:** [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/) 
-
----
-
-## 🛑 Outros Comandos Úteis do Wrapper CLI
-
-Gerencie o uso diário somente usando o helper na raiz (`cli.ps1`):
-* `.\cli.ps1 up` — Dá a partida regular no servidor já existente sem reinstalar nada.
-* `.\cli.ps1 down` — Para a aplicação global e seus sub-processos do Compose.
-* `.\cli.ps1 migrations` — Para mapear mudanças de modelo do py e transferir.
-* `.\cli.ps1 migrate` — Envia pro banco as migrações mais ativas gravadas em arquivo.
-* `.\cli.ps1 bash` —  Acessar internamente como bash root o app principal python.
-* `.\cli.ps1 logs` — Monitorar acesso em cauda do seu Nginx/Django.
-
-*(Qualquer outro comando injetará nativamente no `manage.py` de seu docker. Ex: `.\cli.ps1 runserver`).*
+Acesse o sistema localmente em:
+* **Frontend UI**: [http://localhost:3000](http://localhost:3000)
+* **Backend API REST**: [http://localhost:8000/api](http://localhost:8000/api)
+* **Swagger Docs**: [http://localhost:8000/api/docs/](http://localhost:8000/api/docs/)
 
 ---
 
-> _Tão eterno quanto a ideia original. Boilerplate desenvolvido pelo sistema base corporativa RoGeRio CoSTa._
+## 🚀 Guia de Deploy Profissional no Easypanel (VPS)
+
+O **Easypanel** é um painel de controle espetacular baseado em Docker que simplifica o gerenciamento de servidores VPS de alta performance. Segue o guia passo a passo para colocar a aplicação do **Digitalizador** no ar.
+
+### 📋 1. Criar um Novo Projeto no Easypanel
+1. Acesse o dashboard do seu Easypanel.
+2. Clique em **"Create Project"** e defina o nome do projeto como `digitalizador`.
+
+### 🗄️ 2. Provisionar o Banco de Dados (PostgreSQL)
+1. Dentro do projeto, clique em **"Create Service"** e selecione **"Database"** -> **"Postgres"**.
+2. Defina o nome como `postgres-db`.
+3. O Easypanel irá gerar automaticamente as variáveis de ambiente com as credenciais. Anote-as:
+   - `POSTGRES_DB`
+   - `POSTGRES_USER`
+   - `POSTGRES_PASSWORD`
+
+### 🐍 3. Deploy do Backend (Django API)
+Como o projeto está estruturado em monorepo, podemos usar o Easypanel para fazer o build a partir do subdiretório `/backend` usando o Dockerfile integrado.
+
+1. Clique em **"Create Service"** -> **"App"** e dê o nome de `backend-api`.
+2. Em **Source**, selecione **"Git"** e conecte seu repositório público: `https://github.com/rogeriokostha/digitalizador`.
+3. Configure as opções do Git:
+   - **Branch**: `main`
+   - **Build Path**: `/backend`
+4. Em **Build**, defina para usar o **Dockerfile** (o Easypanel lerá o `backend/Dockerfile` automaticamente).
+5. Em **Environment**, adicione as variáveis de ambiente necessárias (conectando com o banco `postgres-db` criado acima):
+   - `DEBUG=False`
+   - `DATABASE_URL=postgres://<usuario>:<senha>@<host-do-postgres>:5432/<nome-do-banco>`
+   - `SECRET_KEY=sua-chave-secreta-segura`
+   - `ALLOWED_HOSTS=api.seudominio.com,backend-api`
+6. O Easypanel fornecerá um domínio padrão ou você pode apontar o seu subdomínio customizado (ex: `api.seudominio.com`). O SSL (Let's Encrypt) é ativado automaticamente!
+
+### ⚛️ 4. Deploy do Frontend (Next.js)
+1. Clique em **"Create Service"** -> **"App"** e dê o nome de `frontend-web`.
+2. Conecte ao mesmo repositório Git, mas defina:
+   - **Build Path**: `/frontend`
+3. O Easypanel detectará automaticamente o Next.js e utilizará o buildpack do **Node.js** para rodar `npm run build` e `npm run start`.
+4. Em **Environment**, insira as variáveis públicas exigidas pelo Next.js:
+   - `NEXT_PUBLIC_API_URL=https://api.seudominio.com` (apontando para a url de produção do backend criada no passo 3)
+5. Aponte seu domínio principal (ex: `seudominio.com` ou `www.seudominio.com`) para este serviço. O Easypanel cuidará do roteamento e SSL de forma transparente.
+
+---
+
+> _"Materializando visões complexas em ecossistemas digitais de elite." — Rogerio Kostha, Arquiteto de Soluções._

@@ -40,3 +40,13 @@ desktop.ini
 .idea/
 *.swp
 *.swo
+docs/
+
+# ================================
+# GLOBAL / RAIZ (Proteção)
+# ================================
+venv/
+.env
+.env.local
+.env.production
+.env.development
