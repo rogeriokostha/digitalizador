@@ -1,0 +1,95 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: digitalizador_prod_db
+    restart: always
+    environment:
+      POSTGRES_DB: digitalizador_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-super_secure_prod_password}
+    volumes:
+      - postgres_prod_data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  redis:
+    image: redis:7-alpine
+    container_name: digitalizador_prod_redis
+    restart: always
+    networks:
+      - internal
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: digitalizador_prod_backend
+    restart: always
+    # Comando de produção otimizado com Gunicorn em vez de runserver
+    command: gunicorn nucleo.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    environment:
+      - DEBUG=False
+      - DJANGO_SETTINGS_MODULE=nucleo.settings.prod
+      - SECRET_KEY=${SECRET_KEY:-sua_chave_secreta_super_segura_de_producao}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-*}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-https://digitalizadordeideias.com.br,https://www.digitalizadordeideias.com.br}
+      - SECURE_SSL_REDIRECT=True
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=digitalizador_db
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD:-super_secure_prod_password}
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    networks:
+      - internal
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      # Altere "api.digitalizadordeideias.com.br" para o domínio final da sua API
+      - "traefik.http.routers.digitalizador-backend.rule=Host(`api.digitalizadordeideias.com.br`)"
+      - "traefik.http.routers.digitalizador-backend.entrypoints=websecure"
+      - "traefik.http.routers.digitalizador-backend.tls=true"
+      - "traefik.http.routers.digitalizador-backend.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.digitalizador-backend.loadbalancer.server.port=8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # A URL da API precisa ser injetada no momento do build no Next.js
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.digitalizadordeideias.com.br/api}
+    container_name: digitalizador_prod_frontend
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://api.digitalizadordeideias.com.br/api}
+    depends_on:
+      - backend
+    networks:
+      - internal
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      # Altere para os domínios finais do seu Frontend
+      - "traefik.http.routers.digitalizador-frontend.rule=Host(`digitalizadordeideias.com.br`) || Host(`www.digitalizadordeideias.com.br`)"
+      - "traefik.http.routers.digitalizador-frontend.entrypoints=websecure"
+      - "traefik.http.routers.digitalizador-frontend.tls=true"
+      - "traefik.http.routers.digitalizador-frontend.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.digitalizador-frontend.loadbalancer.server.port=3000"
+
+networks:
+  # Rede interna privada para comunicação isolada entre contêineres (App <-> Banco <-> Redis)
+  internal:
+    driver: bridge
+  # Rede externa pública do Traefik (Certifique-se de que ela existe na VPS. Ex: "traefik-public" ou "web")
+  traefik-public:
+    external: true
+
+volumes:
+  postgres_prod_data:
